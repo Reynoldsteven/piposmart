@@ -1,0 +1,340 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-pipo-smart-api-2026",
+    "name": "Piposmart API",
+    "description": "Collection REST API Piposmart. Setelah Login, salin token ke variable `token`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "GET Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/health"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "POST Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res && res.data && res.data.token) {",
+                  "  pm.collectionVariables.set('token', res.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"mario@mewinglaundry.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "POST Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"User Baru\",\n  \"email\": \"baru@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"kasir\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/register"
+          }
+        },
+        {
+          "name": "GET Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": "{{baseUrl}}/auth/me"
+          }
+        },
+        {
+          "name": "DELETE Session (Logout)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": "{{baseUrl}}/auth/session"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Layanan",
+      "item": [
+        {
+          "name": "GET List Layanan",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/layanan?page=1&limit=20&q=&kategori=",
+              "host": ["{{baseUrl}}"],
+              "path": ["layanan"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "20" },
+                { "key": "q", "value": "" },
+                { "key": "kategori", "value": "" },
+                { "key": "is_active", "value": "", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET Layanan by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/layanan/1"
+          }
+        },
+        {
+          "name": "POST Create Layanan",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Cuci Express Test\",\n  \"kategori\": \"Cuci\",\n  \"harga\": 18000,\n  \"satuan\": \"kg\",\n  \"is_active\": true\n}"
+            },
+            "url": "{{baseUrl}}/layanan"
+          }
+        },
+        {
+          "name": "PUT Update Layanan",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Cuci Express Updated\",\n  \"kategori\": \"Cuci\",\n  \"harga\": 20000,\n  \"satuan\": \"kg\",\n  \"is_active\": true\n}"
+            },
+            "url": "{{baseUrl}}/layanan/1"
+          }
+        },
+        {
+          "name": "DELETE Layanan",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/layanan/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Outlets",
+      "item": [
+        {
+          "name": "GET List Outlets",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/outlets?page=1&limit=20"
+          }
+        },
+        {
+          "name": "POST Create Outlet",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Outlet Baru\",\n  \"address\": \"Jl. Contoh 1\",\n  \"provinsi\": \"Kepulauan Riau\",\n  \"kota\": \"Batam\",\n  \"kecamatan\": \"Batam Kota\"\n}"
+            },
+            "url": "{{baseUrl}}/outlets"
+          }
+        },
+        {
+          "name": "GET / PUT / DELETE Outlet by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/outlets/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pelanggan",
+      "item": [
+        {
+          "name": "GET List Pelanggan",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/pelanggan?page=1&limit=20&q="
+          }
+        },
+        {
+          "name": "POST Create Pelanggan",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Pelanggan Test\",\n  \"phone\": \"081200000000\",\n  \"gender\": \"Laki-laki\",\n  \"outlet_id\": 1\n}"
+            },
+            "url": "{{baseUrl}}/pelanggan"
+          }
+        },
+        {
+          "name": "GET Pelanggan by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/pelanggan/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Karyawan (Owner)",
+      "item": [
+        {
+          "name": "GET List Karyawan",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/karyawan?page=1&limit=20"
+          }
+        },
+        {
+          "name": "POST Create Karyawan",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Kasir Test\",\n  \"email\": \"kasir.test@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"kasir\",\n  \"outlet_ids\": [1],\n  \"join_date\": \"2026-08-01\"\n}"
+            },
+            "url": "{{baseUrl}}/karyawan"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pesanan",
+      "item": [
+        {
+          "name": "GET List Pesanan",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/pesanan?page=1&limit=20"
+          }
+        },
+        {
+          "name": "POST Create Pesanan",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"outlet_id\": 1,\n  \"pelanggan_id\": 1,\n  \"items\": [\n    { \"layanan_id\": 1, \"qty\": 2 }\n  ],\n  \"notes\": \"Test order\"\n}"
+            },
+            "url": "{{baseUrl}}/pesanan"
+          }
+        },
+        {
+          "name": "GET Pesanan by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/pesanan/1"
+          }
+        },
+        {
+          "name": "PUT Update Pesanan",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Diproses\",\n  \"is_lunas\": false\n}"
+            },
+            "url": "{{baseUrl}}/pesanan/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard & Transactions",
+      "item": [
+        {
+          "name": "GET Dashboard Summary",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/dashboard/summary"
+          }
+        },
+        {
+          "name": "GET Status Summary",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/orders/status-summary"
+          }
+        },
+        {
+          "name": "GET Transactions",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/transactions?page=1&limit=20"
+          }
+        }
+      ]
+    }
+  ]
+}

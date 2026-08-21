@@ -1,0 +1,7 @@
+Error: Couldn't resolve the package 'frontend_app' in 'package:frontend_app/main.dart'.
+test/widget_test.dart:10:8: Error: Not found: 'package:frontend_app/main.dart'
+import 'package:frontend_app/main.dart';
+       ^
+test/widget_test.dart:14:35: Error: Couldn't find constructor 'PiposmartApp'.
+    await tester.pumpWidget(const PiposmartApp());
+                                  ^^^^^^^^^^^^
