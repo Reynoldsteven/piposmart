@@ -4,6 +4,8 @@ Aplikasi manajemen laundry (POS / business management) untuk Technical Assessmen
 
 Frontend Flutter terhubung ke REST API Golang (Gin) dan database MySQL. Fitur utama: autentikasi JWT, dashboard, dan CRUD master data (layanan, outlet, pelanggan, karyawan, pesanan) dengan search, pagination, dan filter.
 
+Video Penggunaan: https://drive.google.com/file/d/189QkquPj7J0pM96BMXv7vSxs-4H8LXGn/view?usp=drivesdk
+
 ---
 
 ## Teknologi
