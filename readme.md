@@ -19,9 +19,10 @@ Frontend Flutter terhubung ke REST API Golang (Gin) dan database MySQL. Fitur ut
 
 ## Prasyarat
 
-- [Flutter](https://docs.flutter.dev/get-started/install) (stable)
-- [Go](https://go.dev/dl/) 1.22+
-- [MySQL](https://dev.mysql.com/downloads/) 8.x
+- [Flutter] 3.41.6
+- [Go] go1.26.6
+- [Gin] 1.12.0
+- [MySQL]  mysql-8.0.30
 - Git
 
 ---
